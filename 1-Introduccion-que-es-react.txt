@@ -1,0 +1,31 @@
+¿Qué es React?
+
+    React es una librería de JavaScript diseñada para construir interfaces de usuario (UI) de forma eficiente y dinámica.
+    Es una librería (y no un framework) porque:
+        Enfocada y ligera: Provee código con funcionalidades específicas, listas para usarse.
+        Flexible: Si necesitas ampliar sus capacidades, puedes agregar otras librerías compatibles.
+    A diferencia de un framework (como Next.js, que se basa en React), React no impone una estructura rígida ni decisiones de arquitectura.
+
+Ventajas de React
+
+    Ligero y flexible: Permite agregar funcionalidades a medida, según las necesidades del proyecto.
+    Compatibilidad: Funciona con la mayoría de los navegadores modernos y también en plataformas móviles y de escritorio.
+    Open Source: Es gratuito y de código abierto, con una comunidad activa que contribuye a su evolución.
+
+¿Para qué fue diseñado React?
+
+    Objetivo principal: Crear interfaces reactivas que respondan en tiempo real a:
+        Datos dinámicos
+        Eventos
+        Interacciones de usuario
+    Escalabilidad y rendimiento: React fue creado para resolver problemas de rendimiento en grandes plataformas web (como Facebook), que necesitaban manejar millones de usuarios y grandes cantidades de información en tiempo real sin afectar la experiencia de usuario.
+
+Origen de React
+
+    Desarrollado por el equipo de Facebook para mejorar la escalabilidad y rendimiento de su plataforma.
+    La web estaba evolucionando para soportar características intensivas en rendimiento, como el scroll infinito y el procesamiento de grandes volúmenes de datos en el navegador.
+    React fue la solución propuesta para hacer eficiente el renderizado de vistas dinámicas y responder en tiempo real a las necesidades de una web moderna.
+
+Resumen en pocas palabras
+
+    React es una librería de JavaScript ligera, flexible y eficiente para crear interfaces dinámicas, ideal para aplicaciones modernas que requieren una experiencia de usuario fluida y en tiempo real.

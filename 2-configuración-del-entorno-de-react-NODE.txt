@@ -1,0 +1,50 @@
+1. Instalación de Node.js
+
+    Node.js es necesario para trabajar con React, ya que permite ejecutar JavaScript en el servidor y viene con npm (Node Package Manager), que facilita la instalación de librerías y herramientas de desarrollo.
+    
+    Instalación:
+        Ve a nodejs.org para descargar el instalador.
+        Versiones disponibles:
+            LTS (Long Term Support): Más estable, recomendada si no estás seguro de cuál versión usar.
+            Latest: Versión más reciente, pero menos probada para producción.
+    
+    Instalación en Mac (recomendado con Homebrew):
+        Si usas Mac, instala Node.js a través de Homebrew, un gestor de paquetes que simplifica la instalación.
+        Instrucciones:
+            Instala Homebrew: Descárgalo desde brew.sh.
+            Ejecuta el siguiente comando en la terminal para instalar Node:
+
+            bash
+
+            brew install node
+
+2. Instalación de un Editor de Código
+
+    Puedes usar cualquier editor, pero se recomienda Visual Studio Code (VS Code) por ser:
+        Gratuito y open source
+        Compatible con Mac y Windows
+        Ofrece una experiencia de desarrollo uniforme en ambos sistemas operativos.
+   
+    Descarga VS Code desde su sitio oficial si aún no lo tienes.
+
+3. Uso de la Terminal en Visual Studio Code
+
+    Una ventaja de VS Code es que permite usar la terminal del sistema dentro de su interfaz.
+    Abrir la terminal en VS Code:
+        Ve a la barra superior, selecciona View y luego Terminal.
+        En la terminal, puedes ejecutar comandos de sistema sin salir del editor.
+        Ejemplo para verificar la versión de Node instalada:
+
+        bash
+
+        node --version
+
+            Al ejecutar este comando, se muestra la versión de Node instalada, confirmando que todo esté listo.
+
+Resumen de Preparación del Entorno de Desarrollo
+
+    Instalar Node.js (mejor con Homebrew en Mac) y elegir la versión LTS para estabilidad.
+    Instalar VS Code como editor de código para una experiencia de desarrollo integrada y flexible.
+    Usar la terminal de VS Code para ejecutar comandos sin salir del editor.
+
+Con estos pasos completados, el entorno está listo para comenzar a desarrollar en ReactJS.
