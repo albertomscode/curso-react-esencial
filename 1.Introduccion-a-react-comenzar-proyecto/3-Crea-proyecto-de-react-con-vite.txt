@@ -1,0 +1,80 @@
+Generar una App React sin Usar create-react-app
+
+
+Opciones para Crear Aplicaciones en React
+
+    En el pasado, el comando npx create-react-app se utilizaba ampliamente para crear aplicaciones en React, pero actualmente está desactualizado y no es recomendado.
+    La comunidad de React sugiere usar frameworks modernos de React, que ya incluyen:
+        Librerías adicionales
+        Patrones comunes
+        Herramientas de desarrollo y decisiones de arquitectura
+    Frameworks recomendados:
+        Next.js
+        Remix
+        Gatsby
+        Vite (opción usada en este curso, enfocada en simplicidad y velocidad).
+
+---------------------------------------------------------------------------------------
+
+- Creación de un Proyecto React con Vite
+
+    Para crear una aplicación React con Vite en lugar de create-react-app, sigue estos pasos:
+
+        Abrir la Terminal en VS Code:
+            Ve a la barra superior, selecciona View > Terminal.
+
+        Ejecutar el comando para crear el proyecto con Vite:
+
+        bash
+
+    npm create vite
+
+        Se abrirá un diálogo para configurar el proyecto.
+
+    Configurar el Proyecto:
+
+        Nombre del proyecto: Escribe el nombre (ej. my-project) y presiona Enter.
+        Seleccionar plantilla: Elige React.
+        JavaScript vs. TypeScript: Para los primeros pasos, selecciona JavaScript.
+
+    Ingresar en la carpeta del proyecto:
+
+        Navega a la carpeta creada por Vite usando el comando:
+
+        bash
+
+        cd my-project
+
+    Instalar dependencias:
+
+        Ejecuta el siguiente comando para instalar todas las dependencias:
+
+        bash
+
+        npm install
+
+        Esto creará una carpeta node_modules que contiene todas las librerías y herramientas necesarias para el proyecto.
+
+    Ejecutar el Proyecto en el Servidor Local:
+
+        Inicia el servidor de desarrollo con el siguiente comando:
+
+        bash
+
+            npm run dev
+
+            La terminal mostrará un enlace con la dirección localhost y un puerto específico (por ejemplo, localhost:3000). Haz clic en el enlace o cópialo en tu navegador para ver tu aplicación en funcionamiento.
+
+
+---------------------------------------------------------------------------------------
+
+
+- Resumen Paso a Paso para Crear una App React con Vite
+
+    Abrir la terminal en VS Code.
+    Crear proyecto con npm create vite.
+    Configurar el proyecto: nombre, plantilla (React), y lenguaje (JavaScript).
+    Acceder a la carpeta del proyecto y ejecutar npm install.
+    Iniciar la aplicación en el servidor local con npm run dev y acceder a localhost en el navegador.
+
+Con estos pasos, tendrás tu primera aplicación React corriendo en un servidor local. ¡Felicidades!

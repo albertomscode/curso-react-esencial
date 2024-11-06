@@ -1,0 +1,128 @@
+LOS COMPONENTES DE CLASE YA NO SE USAN MAS. NI LEAS ESTE ARCHIVO.
+SOLO TE LO DEJO AQUÍ PORQUE PIENSO QUE ES BUENO SABER QUE EXISTIAN. SOLO COMO DATO.
+
+Componentes de Clase en React
+
+Introducción a los Componentes de Clase
+
+    En React, se pueden crear componentes de dos maneras:
+        Componentes Funcionales (recomendados en React moderno).
+        Componentes de Clase (más comunes en proyectos antiguos o en arquitecturas que los requieran).
+    Los componentes de clase permiten trabajar con el estado y con el ciclo de vida de una manera tradicional. Aunque son menos comunes hoy, es importante comprender su estructura y funcionamiento.
+
+Ejemplo: Creación de un Componente de Clase - ContadorClase
+
+    Creación del Archivo del Componente:
+        Creamos un archivo llamado ContadorClase.jsx dentro de la carpeta components.
+        Este componente se importa y se inyecta en el archivo principal App.jsx para que se muestre en la aplicación.
+
+    Definición del Componente:
+        Para crear un componente de clase, importa React y Component.
+        Define la clase usando class NombreDelComponente extends Component.
+
+    javascript
+
+import React, { Component } from 'react';
+
+class ContadorClase extends Component {
+    // ...
+}
+
+Constructor:
+
+    Agrega un constructor que llama a super() para acceder a las funcionalidades de Component.
+    Si el componente recibe props, se pasan como argumento a super(props).
+    Dentro del constructor, inicializa el estado con this.state.
+
+javascript
+
+constructor(props) {
+    super(props);
+    this.state = {
+        conteo: 0  // Estado inicial del contador
+    };
+}
+
+Métodos para Modificar el Estado:
+
+    Define métodos para actualizar el estado. En este caso, se crearán dos métodos para incrementar y decrementar el valor de conteo.
+    Actualiza el estado usando this.setState.
+
+javascript
+
+incrementar = () => {
+    this.setState((prevState) => ({ conteo: prevState.conteo + 1 }));
+};
+
+decrementar = () => {
+    this.setState((prevState) => ({ conteo: prevState.conteo - 1 }));
+};
+
+Renderizado del Componente:
+
+    En el método render(), incluye un return que contiene el JSX para mostrar el componente.
+    Utiliza el estado (this.state.conteo) y los métodos definidos (this.incrementar y this.decrementar) en los elementos del componente.
+
+javascript
+
+render() {
+    return (
+        <div>
+            <h1>Contador: {this.state.conteo}</h1>
+            <button onClick={this.incrementar}>Incrementar</button>
+            <button onClick={this.decrementar}>Decrementar</button>
+        </div>
+    );
+}
+
+Exportación del Componente:
+
+    Finaliza el archivo exportando la clase para poder importarla y utilizarla en otros archivos.
+
+javascript
+
+    export default ContadorClase;
+
+Resumen del Código Completo de ContadorClase
+
+javascript
+
+import React, { Component } from 'react';
+
+class ContadorClase extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            conteo: 0
+        };
+    }
+
+    incrementar = () => {
+        this.setState((prevState) => ({ conteo: prevState.conteo + 1 }));
+    };
+
+    decrementar = () => {
+        this.setState((prevState) => ({ conteo: prevState.conteo - 1 }));
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>Contador: {this.state.conteo}</h1>
+                <button onClick={this.incrementar}>Incrementar</button>
+                <button onClick={this.decrementar}>Decrementar</button>
+            </div>
+        );
+    }
+}
+
+export default ContadorClase;
+
+Funcionamiento y Ejecución
+
+    Al ejecutar el proyecto en el navegador, el componente ContadorClase muestra un valor inicial del contador y dos botones para incrementar o decrementar el conteo.
+    Estado y Re-renderizado: Cada vez que se presiona un botón, el estado se actualiza y el componente se vuelve a renderizar, mostrando el valor actualizado.
+
+Notas Finales
+
+    Aunque los componentes funcionales con Hooks son la práctica recomendada actualmente, comprender los componentes de clase es útil para trabajar con proyectos heredados y para entender mejor cómo funciona el ciclo de vida de un componente en React.

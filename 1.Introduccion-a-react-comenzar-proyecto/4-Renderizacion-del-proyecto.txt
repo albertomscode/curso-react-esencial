@@ -1,0 +1,81 @@
+- Renderización de Elementos en React
+
+Nota: Recordemos primero que renderizar es el termino que se usa para decir que vamos a hacer el npm run dev en el terminal de visual studio code
+para que se inicie el proyecto en el mozilla firefox.
+
+
+    Estructura Básica de una Aplicación React. El proyecto aparecerá con estos archivos en el visual studio code:
+
+        Archivo index.html:
+            Ubicación: Es el punto de entrada principal de la aplicación.
+            Contenido clave:
+                Script: Incluye el script de la librería de React o "bundle", donde están las instrucciones para la aplicación.
+                Div con id="root": Es el contenedor donde se renderizará la aplicación React.
+
+        Archivo main.jsx (Ubicación: src/main.jsx):
+            Este archivo es el punto de entrada de JavaScript para la aplicación.
+            Uso de JSX: Este archivo usa JSX (una extensión que permite combinar JavaScript con HTML).
+            Proceso de Renderización:
+                Importa los elementos clave de React.
+                Selecciona el elemento root en index.html.
+                Inyecta el código de la aplicación dentro del div con id="root".
+
+        Archivo App.jsx (Ubicación: src/App.jsx):
+            Contiene la estructura y componentes principales de la aplicación.
+            Utiliza JSX para mezclar JavaScript (como funciones e importaciones) con HTML.
+            Este archivo es el lugar donde puedes crear y gestionar componentes que forman la interfaz de la aplicación.
+
+
+---------------------------------------------------------------------------------------
+
+
+
+- Flujo de Trabajo en una Aplicación React
+
+    Iniciar el Servidor de Desarrollo:
+        Usa el comando:
+
+        bash
+
+    npm run dev
+
+    Esto compila la aplicación y la ejecuta en un servidor local.
+    La aplicación estará disponible en una dirección localhost en el navegador.
+
+    Realizar Cambios y Actualizar:
+
+        Modifica el código en los archivos JSX.
+        Al guardar los cambios, el servidor de desarrollo recarga automáticamente la aplicación en el navegador.
+
+    Detener el Servidor:
+
+        Para detener el servidor local, ve a la terminal y presiona:
+
+        plaintext
+
+            CTRL+C
+
+            Al detener el servidor, localhost dejará de mostrar la aplicación, indicando que el servidor ya no está en ejecución.
+
+
+---------------------------------------------------------------------------------------
+
+
+
+- Resumen de la Renderización y Ciclo de Desarrollo en React
+
+    Punto de entrada (index.html):
+        Define el contenedor root donde se renderizará la aplicación.
+
+    Renderización (main.jsx):
+        Conecta React y renderiza el contenido en root usando JSX.
+
+    Componentes (App.jsx):
+        Componentes principales y funcionalidad de la interfaz están organizados aquí.
+
+    Ciclo de desarrollo:
+        Ejecuta la aplicación en localhost con npm run dev.
+        Haz cambios en el código, guarda, y observa los resultados en el navegador automáticamente.
+
+Este es el flujo básico para desarrollar una aplicación React, donde se aprovecha la recarga automática para ver cambios en tiempo real y 
+gestionar la aplicación en componentes.

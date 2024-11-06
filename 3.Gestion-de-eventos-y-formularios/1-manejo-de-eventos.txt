@@ -1,0 +1,42 @@
+Manejo de eventos
+
+En esta lección, vamos a hablar sobre los eventos en React. Aquí estamos viendo un formulario que puedes encontrar entre los ejercicios de este curso. Vamos a utilizar específicamente un formulario porque es uno de los elementos con mayor interacción con el usuario y, por lo tanto, con el que más frecuentemente vamos a utilizar eventos.
+
+Vamos al código de este formulario. Ya lo tengo dentro de Visual Studio Code y, básicamente, podemos ver que en mi aplicación estoy importando un componente llamado MiFormulario. Estamos trabajando en el componente que despliega el formulario que tenemos en pantalla.
+Creación de un Método para Capturar el Evento
+
+Para empezar a trabajar con eventos, primero necesitamos crear un método que capture la información del evento. Así que vamos a crear una constante llamada activarPorEvento. Vamos a crear un método utilizando la sintaxis abreviada de funciones en JavaScript y dentro de este método vamos a escribir un mensaje en la consola que diga "el evento ha sido activado". Guardamos y ahora estamos listos para detectar eventos dentro de este formulario.
+Detección del Evento Click
+
+Uno de los eventos más comunes que vamos a detectar es el evento Click. Vamos a ir a la sección donde dice "Contraseña" y, dentro del Label (donde aparece el texto), vamos a incluir el evento Click. La sintaxis para detectar eventos es consistente: usamos on seguido del nombre del evento, como en onClick. Después, vinculamos el método que maneja el evento Click, en este caso, activarPorEvento.
+
+Es importante notar que solo estamos llamando al método con su nombre, sin paréntesis. Si colocamos paréntesis como en una llamada a función, nos generará un error, así que debemos dejarlo sin paréntesis.
+Detección del Evento onChange
+
+También vamos a agregar otro evento en el input. Los inputs son los elementos donde insertamos texto, y aquí usaremos el evento onChange. Este evento se activa cada vez que cambia el valor del input. Nuevamente, vinculamos el método activarPorEvento a este evento para ver cuándo ocurre el cambio.
+Detección del Evento MouseOver
+
+Por último, vamos a agregar un tercer evento, esta vez un evento del ratón, ya que podemos detectar casi cualquier tipo de evento en React. Usaremos el evento MouseOver, que detecta cuándo el ratón pasa sobre un elemento. Vamos a llamar a activarPorEvento también para este evento.
+Visualización de Resultados en la Consola
+
+Vamos a revisar el código y los resultados de este componente. Dentro de la aplicación, hacemos clic derecho, seleccionamos Inspeccionar y vamos a la consola para ver los mensajes de los eventos que se están activando.
+
+    Contraseña: Cuando hacemos clic sobre el label de contraseña, se activa el evento Click, y en la consola aparece el mensaje "el evento ha sido activado".
+
+    Email: Para el input de email, el evento se activa cada vez que cambia el valor del campo. Al ingresar o modificar el texto, vemos cómo el mensaje aparece en la consola cada vez que ocurre un cambio.
+
+    Usuario: Aquí estamos rastreando el evento MouseOver, así que si pasamos el ratón sobre el texto "Usuario", vemos que el evento se activa. Sin embargo, hacer clic no generará ninguna respuesta porque no está vinculado a ese tipo de evento.
+
+Captura de Información del Evento
+
+Podemos ver qué tipo de evento hemos activado y obtener información adicional. Para ello, pasamos el evento como un parámetro en el método activarPorEvento y lo nombramos como event. Esto nos permite desplegar más detalles del evento.
+
+Para ver el tipo de evento que fue activado, usamos event.type. Ahora, al ejecutar el código, vemos en la consola el tipo específico de cada evento:
+
+    En el caso de Usuario, aparece "mouseover".
+    En el campo Email, aparece "change".
+    En Contraseña, se indica que el evento fue de tipo click.
+
+Resumen
+
+Así, podemos rastrear los diferentes eventos que ocurren en React y procesar esta información dentro de la lógica del componente. Esto nos ayuda a construir interacciones más ricas y complejas en nuestras aplicaciones.
