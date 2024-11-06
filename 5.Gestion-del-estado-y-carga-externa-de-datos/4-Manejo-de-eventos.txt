@@ -1,0 +1,214 @@
+1. Contexto Compartido para el Estado Global del Carrito de Compras
+
+Para compartir el estado de los productos en la aplicación, utiliza un DataProvider que define el contexto global y expone tanto los datos (data) como el método de actualización (setData). Este contexto será consumido por los componentes de la lista de productos y del carrito de compras.
+
+Ejemplo del archivo de contexto DataContext.jsx:
+
+import React, { createContext, useState, useEffect } from 'react';
+
+export const DataContext = createContext();
+
+export function DataProvider({ children }) {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('productos.json')
+            .then(response => response.json())
+            .then(datos => setData(datos));
+    }, []);
+
+    return (
+        <DataContext.Provider value={{ data, setData }}>
+            {children}
+        </DataContext.Provider>
+    );
+}
+
+2. Manejo de Eventos para Modificar el Estado
+
+Cada componente (ListaProductos y ListaCarrito) accederá al contexto y tendrá métodos específicos para manejar la adición y eliminación de productos del carrito.
+2.1 Función para Cambiar el status del Producto
+
+En ListaProductos, define una función llamada manejarClick que cambie el estado de un producto al agregarlo al carrito.
+
+import React, { useContext } from 'react';
+import { DataContext } from './DataContext';
+
+function ListaProductos() {
+    const { data, setData } = useContext(DataContext);
+
+    const manejarClick = (producto) => {
+        setData((prevData) =>
+            prevData.map((item) =>
+                item.id === producto.id ? { ...item, status: 'selected' } : item
+            )
+        );
+    };
+
+    return (
+        <div>
+            {data.map((producto) => (
+                <div key={producto.id}>
+                    <span>{producto.nombre}</span>
+                    <button onClick={() => manejarClick(producto)}>Agregar al carrito</button>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export default ListaProductos;
+
+2.2 Función para Filtrar y Mostrar los Productos del Carrito
+
+En ListaCarrito, muestra solo los productos cuyo status es selected. Define también una función removerItem para cambiar el status de un producto a unselected y eliminarlo del carrito.
+
+import React, { useContext } from 'react';
+import { DataContext } from './DataContext';
+
+function ListaCarrito() {
+    const { data, setData } = useContext(DataContext);
+
+    // Filtra productos con status 'selected'
+    const filteredItems = data.filter((item) => item.status === 'selected');
+
+    // Función para eliminar un producto del carrito
+    const removerItem = (producto) => {
+        setData((prevData) =>
+            prevData.map((item) =>
+                item.id === producto.id ? { ...item, status: 'unselected' } : item
+            )
+        );
+    };
+
+    return (
+        <div>
+            <h2>Carrito de Compras</h2>
+            {filteredItems.map((producto) => (
+                <div key={producto.id}>
+                    <span>{producto.nombre}</span>
+                    <button onClick={() => removerItem(producto)}>Remover del carrito</button>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export default ListaCarrito;
+
+3. Resumen del Flujo de Datos en la Aplicación
+
+    Evento de Clic en Producto: Al hacer clic en el botón "Agregar al carrito" en ListaProductos, se ejecuta manejarClick que actualiza el status del producto a selected.
+    Actualización del Estado Compartido: El cambio de estado es manejado globalmente en el contexto (DataContext). Como ListaCarrito consume el mismo contexto, también refleja automáticamente el cambio.
+    Mostrar Solo Productos Seleccionados: ListaCarrito filtra los productos con status: 'selected', mostrando solo los productos agregados al carrito.
+    Eliminar Productos del Carrito: removerItem en ListaCarrito cambia el status de un producto a unselected, eliminándolo del carrito.
+
+4. Estructura Completa del Código
+DataContext.jsx
+
+import React, { createContext, useState, useEffect } from 'react';
+
+export const DataContext = createContext();
+
+export function DataProvider({ children }) {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('productos.json')
+            .then(response => response.json())
+            .then(datos => setData(datos));
+    }, []);
+
+    return (
+        <DataContext.Provider value={{ data, setData }}>
+            {children}
+        </DataContext.Provider>
+    );
+}
+
+App.js
+
+import React from 'react';
+import { DataProvider } from './DataContext';
+import ListaProductos from './ListaProductos';
+import ListaCarrito from './ListaCarrito';
+
+function App() {
+    return (
+        <DataProvider>
+            <ListaProductos />
+            <ListaCarrito />
+        </DataProvider>
+    );
+}
+
+export default App;
+
+ListaProductos.js
+
+import React, { useContext } from 'react';
+import { DataContext } from './DataContext';
+
+function ListaProductos() {
+    const { data, setData } = useContext(DataContext);
+
+    const manejarClick = (producto) => {
+        setData((prevData) =>
+            prevData.map((item) =>
+                item.id === producto.id ? { ...item, status: 'selected' } : item
+            )
+        );
+    };
+
+    return (
+        <div>
+            {data.map((producto) => (
+                <div key={producto.id}>
+                    <span>{producto.nombre}</span>
+                    <button onClick={() => manejarClick(producto)}>Agregar al carrito</button>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export default ListaProductos;
+
+ListaCarrito.js
+
+import React, { useContext } from 'react';
+import { DataContext } from './DataContext';
+
+function ListaCarrito() {
+    const { data, setData } = useContext(DataContext);
+
+    const filteredItems = data.filter((item) => item.status === 'selected');
+
+    const removerItem = (producto) => {
+        setData((prevData) =>
+            prevData.map((item) =>
+                item.id === producto.id ? { ...item, status: 'unselected' } : item
+            )
+        );
+    };
+
+    return (
+        <div>
+            <h2>Carrito de Compras</h2>
+            {filteredItems.map((producto) => (
+                <div key={producto.id}>
+                    <span>{producto.nombre}</span>
+                    <button onClick={() => removerItem(producto)}>Remover del carrito</button>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export default ListaCarrito;
+
+5. Explicación del Flujo Completo
+
+    Agregar al Carrito: Cambia status de un producto a selected.
+    Eliminar del Carrito: Cambia status a unselected.
+    Filtrar Productos Seleccionados: Solo los productos con status: 'selected' se muestran en el carrito.

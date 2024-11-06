@@ -1,0 +1,88 @@
+1. Carga de Datos Externos en React
+
+Para cargar datos externos en una aplicación React, usaremos dos hooks clave: useState y useEffect. Estos nos permiten gestionar el estado y ejecutar procesos en momentos específicos, como cuando se monta un componente.
+2. useState: Almacenamiento de Datos Reactivo
+
+    Definición de useState: Este hook permite crear un "estado reactivo" en el cual podemos almacenar y actualizar datos.
+
+    const [data, setData] = useState([]);
+
+        data: Es el valor del estado (aquí, un array vacío por defecto).
+        setData: Función para actualizar el valor de data.
+
+    Nomenclatura: Se recomienda usar nombre para el valor y setNombre para la función que lo actualiza (ejemplo: autos y setAutos para una lista de autos).
+
+3. useEffect: Ejecutar Código en Momentos Específicos
+
+    Definición de useEffect: Este hook permite ejecutar efectos secundarios (side effects) en momentos específicos, como al cargar un componente.
+
+    useEffect(() => {
+      // Lógica para cargar datos o ejecutar alguna acción específica
+    }, []);
+
+        El segundo parámetro ([]) es un array de dependencias. Aquí vacío, lo que significa que el efecto solo se ejecutará una vez, al montar el componente.
+
+    Uso en la carga de datos: Ideal para operaciones asíncronas como fetch para obtener datos desde una API o archivo local.
+
+4. Carga de Datos Externos con fetch
+
+Para cargar los datos desde un archivo (ej., productos.json), usamos fetch dentro de useEffect:
+
+useEffect(() => {
+  fetch('productos.json')
+    .then(response => response.json())
+    .then(datos => setData(datos));  // Guardamos los datos en el estado con setData
+}, []);
+
+    fetch obtiene los datos de productos.json.
+    response.json() convierte los datos a formato JSON.
+    setData(datos) guarda los datos en el estado data.
+
+5. Uso del Estado y Props en Componentes Hijos
+
+    Una vez cargados los datos en el estado data, podemos pasarlos a componentes hijos a través de las propiedades (props).
+    Ejemplo:
+
+    <ListaProductos productos={data} />
+    <ListaCarrito productos={data} />
+
+        Aquí se pasa data como prop productos a cada componente, permitiéndoles acceder a la información cargada.
+
+6. Errores Comunes y Solución
+
+    Error de nombre no definido: Al usar nombres de variables, asegúrate de que coincidan (ej., data y no datos si nombraste tu estado data).
+    Estado reactivo: Los cambios en data actualizarán automáticamente los componentes que lo usan, gracias a la reactividad de React.
+
+7. Ejemplo Completo
+
+Este código ilustra el proceso completo:
+
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  // Estado para guardar los datos cargados
+  const [data, setData] = useState([]);
+
+  // useEffect para cargar datos al montar el componente
+  useEffect(() => {
+    fetch('productos.json')
+      .then(response => response.json())
+      .then(datos => setData(datos));  // Guardamos datos en el estado
+  }, []);
+
+  return (
+    <div>
+      <ListaProductos productos={data} />
+      <ListaCarrito productos={data} />
+    </div>
+  );
+}
+
+Resumen Rápido:
+
+    useState crea un estado reactivo.
+    useEffect ejecuta código en momentos específicos.
+    fetch carga datos externos y setData los guarda en el estado.
+    Props: Pasamos data como prop a componentes hijos para mostrar la información.
+
+Con estos apuntes, tienes una referencia rápida sobre cómo usar useState y useEffect para cargar y gestionar datos externos en una aplicación React.

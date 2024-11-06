@@ -1,0 +1,164 @@
+1. ¿Qué es la API de Contexto de React?
+
+La API de Contexto en React permite compartir datos entre múltiples componentes sin necesidad de pasar props. Esto simplifica la estructura de la aplicación y facilita el mantenimiento, especialmente en aplicaciones con muchos niveles de componentes.
+2. Estructura de un Contexto Básico en React
+
+Para crear y usar un contexto en React, siguen estos pasos básicos:
+
+    Crear el Contexto.
+    Definir un Proveedor de Contexto que contenga los datos y métodos a compartir.
+    Envolver los Componentes que necesitan acceder a los datos dentro del Proveedor.
+    Acceder a los datos del Contexto en los componentes que lo necesiten.
+
+3. Creación del Contexto y Proveedor
+
+    Crear el archivo de contexto (por ejemplo, DataContext.jsx) y definir el contexto y proveedor.
+
+    import React, { createContext, useState, useEffect } from 'react';
+
+    // Crear el contexto
+    export const DataContext = createContext();
+
+    // Definir el Proveedor de Contexto
+    export function DataProvider({ children }) {
+        const [data, setData] = useState([]);
+
+        // Cargar los datos externos usando useEffect
+        useEffect(() => {
+            fetch('productos.json')
+                .then(response => response.json())
+                .then(datos => setData(datos));
+        }, []);
+
+        return (
+            <DataContext.Provider value={{ data, setData }}>
+                {children}  {/* Incluye cualquier componente hijo */}
+            </DataContext.Provider>
+        );
+    }
+
+        DataContext: El contexto que contiene los datos.
+        DataProvider: El proveedor que envuelve a los componentes hijos (children), permitiéndoles acceder a data y setData dentro de DataContext.Provider.
+
+    Pasar los Datos con value:
+        Utilizamos la propiedad value de Provider para exponer los valores que queremos compartir en el contexto (data y setData en este caso).
+
+4. Uso del Contexto en la Aplicación
+
+    En el archivo principal de la aplicación (por ejemplo, App.js), envolver los componentes dentro del DataProvider.
+
+    import React from 'react';
+    import { DataProvider } from './DataContext';
+    import ListaProductos from './ListaProductos';
+    import ListaCarrito from './ListaCarrito';
+
+    function App() {
+        return (
+            <DataProvider>
+                <ListaProductos />
+                <ListaCarrito />
+            </DataProvider>
+        );
+    }
+
+    export default App;
+
+        Al envolver ListaProductos y ListaCarrito dentro de DataProvider, ambos componentes ahora tienen acceso al contexto DataContext.
+
+5. Acceso a los Datos del Contexto en Componentes Hijos
+
+Para que los componentes ListaProductos y ListaCarrito accedan a data y setData del contexto, seguimos estos pasos:
+
+    Importar el contexto y useContext en cada componente hijo:
+
+    import React, { useContext } from 'react';
+    import { DataContext } from './DataContext';
+
+    function ListaProductos() {
+        const { data } = useContext(DataContext);  // Accedemos a data desde el contexto
+
+        return (
+            <div>
+                {/* Renderizar lista de productos */}
+                {data.map((producto, index) => (
+                    <div key={index}>{producto.nombre}</div>
+                ))}
+            </div>
+        );
+    }
+
+    export default ListaProductos;
+
+    Desestructurar los datos del contexto:
+        Usamos const { data, setData } = useContext(DataContext); para obtener acceso directo a data y setData.
+        useContext(DataContext) devuelve el valor del contexto actual ({ data, setData }).
+
+6. Refactorización: Eliminar Props Innecesarias
+
+    Al usar el contexto, no necesitas pasar props de datos a los componentes hijos.
+    Refactoriza los componentes para eliminar las props y acceder a los datos directamente del contexto.
+
+7. Ejemplo Completo del Uso de Contexto en React
+
+// DataContext.jsx
+import React, { createContext, useState, useEffect } from 'react';
+
+export const DataContext = createContext();
+
+export function DataProvider({ children }) {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('productos.json')
+            .then(response => response.json())
+            .then(datos => setData(datos));
+    }, []);
+
+    return (
+        <DataContext.Provider value={{ data, setData }}>
+            {children}
+        </DataContext.Provider>
+    );
+}
+
+// App.js
+import React from 'react';
+import { DataProvider } from './DataContext';
+import ListaProductos from './ListaProductos';
+import ListaCarrito from './ListaCarrito';
+
+function App() {
+    return (
+        <DataProvider>
+            <ListaProductos />
+            <ListaCarrito />
+        </DataProvider>
+    );
+}
+
+export default App;
+
+// ListaProductos.js
+import React, { useContext } from 'react';
+import { DataContext } from './DataContext';
+
+function ListaProductos() {
+    const { data } = useContext(DataContext);
+
+    return (
+        <div>
+            {data.map((producto, index) => (
+                <div key={index}>{producto.nombre}</div>
+            ))}
+        </div>
+    );
+}
+
+export default ListaProductos;
+
+Resumen Rápido
+
+    API de Contexto: Facilita compartir datos entre componentes sin props.
+    DataContext y DataProvider: Estructura básica para crear un contexto y pasar datos.
+    useContext: Hook que permite acceder a los valores del contexto dentro de los componentes.
+    Refactorización: Los componentes hijos obtienen datos directamente del contexto, eliminando la necesidad de props.

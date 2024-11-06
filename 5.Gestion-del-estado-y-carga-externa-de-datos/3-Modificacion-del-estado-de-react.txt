@@ -1,0 +1,162 @@
+1. Contexto y Estado Compartido en React
+
+La API de contexto permite compartir estado entre componentes sin necesidad de pasar props. Cuando un componente modifica el estado, cualquier otro componente que consuma ese contexto también se actualiza automáticamente.
+2. Definir el Contexto con Estado y Método de Actualización
+
+En el archivo de contexto (DataContext.jsx), además de crear el estado inicial, se expone el método para actualizar el estado (setData). Esto permite que cualquier componente que consuma el contexto pueda modificar el estado.
+
+Ejemplo de archivo DataContext.jsx:
+
+import React, { createContext, useState, useEffect } from 'react';
+
+export const DataContext = createContext();
+
+export function DataProvider({ children }) {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('productos.json')
+            .then(response => response.json())
+            .then(datos => setData(datos));
+    }, []);
+
+    return (
+        <DataContext.Provider value={{ data, setData }}>
+            {children}
+        </DataContext.Provider>
+    );
+}
+
+3. Implementación de Eventos para Modificar el Estado en un Componente
+
+Para actualizar el estado desde un componente que consume el contexto, se sigue esta estructura:
+
+    Acceso a data y setData con useContext.
+    Definir un método de evento (como manejarClick) que actualice el estado.
+    Configurar el evento en el elemento interactivo (por ejemplo, un botón) para que ejecute la función de actualización.
+
+4. Ejemplo Práctico: Actualización del Estado en Respuesta a un Clic
+
+    Acceder al contexto en el componente:
+
+    import React, { useContext } from 'react';
+    import { DataContext } from './DataContext';
+
+    function ListaProductos() {
+        const { data, setData } = useContext(DataContext);
+
+        // Definir la función para manejar el clic
+        const manejarClick = (producto) => {
+            setData((prevData) =>
+                prevData.map((item) =>
+                    item.id === producto.id
+                        ? { ...item, nombre: 'selected' }  // Cambia 'nombre' a 'selected' si el id coincide
+                        : item
+                )
+            );
+        };
+
+        return (
+            <div>
+                {data.map((producto) => (
+                    <div key={producto.id}>
+                        <span>{producto.nombre}</span>
+                        <button onClick={() => manejarClick(producto)}>Seleccionar</button>
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+    export default ListaProductos;
+
+    Explicación del código:
+        manejarClick: Esta función recibe un objeto producto y usa setData para actualizar solo el elemento del estado que coincide con el id del producto seleccionado.
+        map: Crea una copia del arreglo data, modificando solo el producto con el id seleccionado.
+        Inmutabilidad: Se utiliza { ...item, nombre: 'selected' } para modificar solo el nombre del producto seleccionado, dejando los demás valores del objeto sin cambios.
+
+    Configuración del evento onClick en el botón:
+        onClick={() => manejarClick(producto)}: La función se llama con el objeto producto como argumento para identificar qué elemento debe actualizarse.
+
+5. Propagación de Cambios entre Componentes que Comparten Contexto
+
+En este caso, los componentes ListaProductos y ListaCarrito están envueltos en el mismo DataProvider. Cuando uno de los componentes actualiza el estado, ambos se actualizan automáticamente para reflejar los cambios.
+
+Por ejemplo, si ListaProductos actualiza un producto cambiando su nombre a "selected", ListaCarrito mostrará también este cambio sin requerir props adicionales.
+6. Explicación del Flujo de Actualización en React
+
+    Evento: Al hacer clic en un botón, se ejecuta la función manejarClick.
+    Actualización del Estado con setData: Se usa setData para actualizar el estado global dentro del contexto.
+    Renderizado Reactivo: React detecta cambios en el estado y actualiza automáticamente todos los componentes que consumen DataContext.
+    Sincronización en Múltiples Componentes: Cualquier componente envuelto en el DataProvider se re-renderiza para reflejar el nuevo estado.
+
+7. Resumen del Código Completo
+DataContext.jsx
+
+import React, { createContext, useState, useEffect } from 'react';
+
+export const DataContext = createContext();
+
+export function DataProvider({ children }) {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('productos.json')
+            .then(response => response.json())
+            .then(datos => setData(datos));
+    }, []);
+
+    return (
+        <DataContext.Provider value={{ data, setData }}>
+            {children}
+        </DataContext.Provider>
+    );
+}
+
+App.js
+
+import React from 'react';
+import { DataProvider } from './DataContext';
+import ListaProductos from './ListaProductos';
+import ListaCarrito from './ListaCarrito';
+
+function App() {
+    return (
+        <DataProvider>
+            <ListaProductos />
+            <ListaCarrito />
+        </DataProvider>
+    );
+}
+
+export default App;
+
+ListaProductos.js
+
+import React, { useContext } from 'react';
+import { DataContext } from './DataContext';
+
+function ListaProductos() {
+    const { data, setData } = useContext(DataContext);
+
+    const manejarClick = (producto) => {
+        setData((prevData) =>
+            prevData.map((item) =>
+                item.id === producto.id ? { ...item, nombre: 'selected' } : item
+            )
+        );
+    };
+
+    return (
+        <div>
+            {data.map((producto) => (
+                <div key={producto.id}>
+                    <span>{producto.nombre}</span>
+                    <button onClick={() => manejarClick(producto)}>Seleccionar</button>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export default ListaProductos;
