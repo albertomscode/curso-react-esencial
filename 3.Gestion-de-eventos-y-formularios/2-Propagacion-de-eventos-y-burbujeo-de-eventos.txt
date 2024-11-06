@@ -1,0 +1,36 @@
+Propagación de Eventos y Burbujeo de Eventos en React
+Conceptos clave:
+
+    Eventos en React:
+        Se capturan a través de métodos como onClick, onChange, onSubmit, etc.
+        Los métodos asociados a los eventos pueden acceder al evento original de JavaScript para manipular la lógica de la aplicación.
+
+    Burbujeo de Eventos (Event Bubbling):
+        En JavaScript, cuando un evento se dispara en un elemento hijo (como un input), este también se propaga hacia los elementos padres (como el form que lo contiene).
+        Esto significa que si haces clic en un input dentro de un form, ambos eventos (onClick en el input y onClick en el form) se ejecutan, lo cual puede no ser el comportamiento deseado.
+
+    Método stopPropagation:
+        Para evitar que el evento se propague a los elementos padres, se puede utilizar el método stopPropagation() sobre el objeto evento.
+        Este método detiene la propagación del evento, permitiendo que solo se ejecute el evento en el elemento específico donde se hizo clic.
+
+Flujo del código:
+
+    Creación de eventos:
+        Se crean dos métodos inputActivado y formularioActivado que se asignan a un input y un form respectivamente, utilizando onClick.
+
+    Comportamiento inicial:
+        Al hacer clic en el input, se disparan ambos eventos: el del input y el del form. Este es el comportamiento predeterminado debido al burbujeo de eventos.
+
+    Corrección con stopPropagation:
+        Se agrega event.stopPropagation() dentro del evento del input para evitar que el evento del form se dispare cuando se hace clic sobre el input.
+        Al implementar esta técnica, al hacer clic en el input, solo se ejecutará el evento asociado al input, sin disparar el evento del form.
+
+    Resultado esperado:
+        Después de aplicar stopPropagation(), al hacer clic en el input, solo se ejecuta el evento asociado al input y no el del form. El mismo comportamiento se aplica cuando se hace clic directamente sobre el form.
+
+Lecciones clave:
+
+    Burbujeo de eventos puede llevar a la ejecución no deseada de múltiples manejadores de eventos cuando un evento en un elemento hijo también afecta a su elemento padre.
+    Evitar efectos indeseados utilizando stopPropagation() para controlar la propagación de eventos en una jerarquía de componentes. Esto mejora el rendimiento y evita duplicación de procesos.
+
+Este conocimiento es útil para manejar correctamente los eventos dentro de formularios y otros elementos anidados en React.

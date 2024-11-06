@@ -1,0 +1,79 @@
+Captura de Datos de Formularios Integrando Eventos y Estado en React
+Conceptos clave:
+
+    Conexión de Eventos y Estado:
+        Los eventos se utilizan para capturar cambios en los formularios y actualizar el estado de la aplicación en consecuencia.
+        Se incorpora el evento onChange a los inputs para monitorear cuando los usuarios modifican su contenido.
+
+    Manejo de Eventos:
+        Se crea un método llamado procesarCambio que recibe el evento y procesa la información de los inputs.
+        Este método se asocia a cada input (username, email, y password) mediante el evento onChange.
+
+    Uso de name y value:
+        Cada input tiene propiedades name y value que son cruciales para identificar qué campo se está actualizando y qué valor tiene.
+        El name permite distinguir entre los distintos inputs al procesar los cambios.
+
+    Actualización del Estado:
+        Se utiliza setFormData para actualizar el estado basado en el input modificado.
+        El método setFormData se llama con una función que recibe el valor previo del estado (prevFormData) y devuelve una copia actualizada donde solo se cambia el valor del campo que ha sido modificado:
+
+        javascript
+
+        setFormData(prev => ({
+          ...prev,
+          [name]: value,
+        }));
+
+    Manejo del Evento onSubmit:
+        Se implementa un método llamado procesarSubmit que maneja el evento de envío del formulario.
+        Este método previene el comportamiento predeterminado del formulario usando event.preventDefault(), lo que evita que la página se recargue al enviar el formulario.
+        También se puede mostrar la información del estado en la consola, lo que permite verificar que los datos han sido capturados correctamente.
+
+Flujo del código:
+
+    Asignación de onChange:
+        Se añade el evento onChange a cada input:
+
+        javascript
+
+    <input type="text" name="username" value={formData.username} onChange={procesarCambio} />
+    <input type="email" name="email" value={formData.email} onChange={procesarCambio} />
+    <input type="password" name="password" value={formData.password} onChange={procesarCambio} />
+
+Definición del Método procesarCambio:
+
+    Se define el método que procesa la información del evento. Captura el value y el name del input modificado:
+
+    javascript
+
+    const procesarCambio = (event) => {
+      const { name, value } = event.target;
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
+
+Implementación del Método procesarSubmit:
+
+    Se define el método que se ejecuta al enviar el formulario:
+
+    javascript
+
+        const procesarSubmit = (event) => {
+          event.preventDefault();
+          console.log(formData);
+        };
+
+        Se asocia este método al evento onSubmit del formulario.
+
+    Ejemplo de Captura de Datos:
+        Cuando se completan los inputs y se envía el formulario, los datos son capturados y se imprimen en la consola.
+
+Lecciones clave:
+
+    Interactividad en Formularios: Al combinar eventos y el estado, se logra una interacción fluida en los formularios de React.
+    Identificación de Campos: El uso de name en los inputs es fundamental para distinguir y actualizar el estado de forma dinámica.
+    Manejo del Envío de Formularios: Controlar el comportamiento de onSubmit con preventDefault() es esencial para evitar la recarga de la página y gestionar los datos de forma adecuada.
+
+Este enfoque es clave para desarrollar formularios reactivos y funcionales en aplicaciones de React, permitiendo una buena gestión del estado y una respuesta adecuada a la entrada del usuario.
